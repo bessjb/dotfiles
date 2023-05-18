@@ -2,6 +2,54 @@
 ## Description
 Config directory for ROS2 development in C++ and Python. IDE is neovim using clangd for code completion and cpptools for debugging. 
 
+## Install
+### Step 1
+
+Install neovim v0.6.1
+**Note** Ubuntu ships with older version - I used the flatpack with the latest release
+https://github.com/neovim/neovim/releases
+
+### Step 2
+
+clone this repo
+
+```
+git clone git@github.com:bessjb/config.git ~/.config
+```
+
+### Step 2
+
+Install Packer                                                                                                                                                                                                                                                                                                                                                                     
+[Github - Packer](https://github.com/wbthomason/packer.nvim)                                                                                                                                                                                                                                                                                                                       
+                                                                                                                                                                                                                                                                                                                                                                                    
+ ```                                                                                                                                                                                                                                                                                                                                                                                
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\                                                                                                                                                                                                                                                                                                                     
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim                                                                                                                                                                                                                                                                                                                            
+```
+
+### Step 3
+
+From inside nvim run the following commands
+
+```
+:PackerUpdate
+```
+
+### Step 4 
+ * add the following to your bashrc to allow [clangd](https://clangd.llvm.org/) to do it's magic 
+ ```
+ export PATH="~/.local/bin:$PATH"
+ export COLCON_HOME=/home/jake/.config/colcon
+ alias vim="nvim"
+
+ ```
+* create the following symlink:
+```
+ln -s .config/tmux/tmux.conf .tmux.conf
+```
+
+Enjoy 
+
 ## Versions
 Ubuntu version:
 ```
