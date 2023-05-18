@@ -33,6 +33,9 @@ return require('packer').startup(function(use)
     }
   }
 
+  -- nvim-dap
+  use 'mfussenegger/nvim-dap'
+
   -- rose-pine color
   use({ 'rose-pine/neovim', as = 'rose-pine' })
   vim.cmd('colorscheme rose-pine')

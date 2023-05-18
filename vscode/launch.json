@@ -1,0 +1,7 @@
+{
+  "type": "cppdbg",
+  "request": "launch",
+  "name": "Launch CPP",
+  "MIMode": "gdb",
+  "miDebuggerPath": "/usr/bin/gdb"
+}
