@@ -8,8 +8,12 @@ return require('packer').startup(function(use)
   -- Telescope
   use {
   'nvim-telescope/telescope.nvim', tag = '0.1.1',
-  requires = { {'nvim-lua/plenary.nvim'} }
+  requires = { {'nvim-lua/plenary.nvim'},
+               -- FZF for Telescope
+               {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'},
+             }
   }
+
 
   -- Tree sitter
   use ( 'nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
