@@ -14,6 +14,8 @@ return require('packer').startup(function(use)
              }
   }
 
+  -- Fugitive
+  use 'tpope/vim-fugitive'
 
   -- Tree sitter
   use ( 'nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
