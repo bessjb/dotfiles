@@ -1,8 +1,9 @@
-{
-  "build": {
-    "parallel-workers": 2,
-    "cmake-args": [
-      "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
-    ]
-  }
-}
+build:
+  parallel-workers: 2
+  packages-skip:
+    - sim4flux
+    - flux
+  cmake-args:
+    - -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    - -GNinja

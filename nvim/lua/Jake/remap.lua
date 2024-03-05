@@ -32,3 +32,8 @@ vim.keymap.set("n", "<leader>y", "\"+Y")
 -- Disable Ex mode
 vim.keymap.set("n", "Q", "<nop>")
 
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '<leader>n', vim.diagnostic.goto_prev)
+vim.keymap.set('n', '<leader>b', vim.diagnostic.goto_next)
+
+vim.keymap.set('t', '<leader><Esc>', '<C-\\><C-n>')
