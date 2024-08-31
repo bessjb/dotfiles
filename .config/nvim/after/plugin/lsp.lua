@@ -6,6 +6,7 @@ lsp.ensure_installed({
   'clangd',
   'lua_ls',
   'pyright',
+  'texlab',
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
