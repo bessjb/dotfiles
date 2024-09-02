@@ -7,7 +7,7 @@ return require('packer').startup(function(use)
 
   -- Telescope
   use {
-  'nvim-telescope/telescope.nvim', tag = '0.1.1',
+  'nvim-telescope/telescope.nvim', tag = '0.1.5',
   requires = { {'nvim-lua/plenary.nvim'},
                -- FZF for Telescope
                {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'},
@@ -23,21 +23,17 @@ return require('packer').startup(function(use)
   -- vim-be-good game
   use ( 'ThePrimeagen/vim-be-good')
 
-  --- LSP zero
-  use {
-    'VonHeikemen/lsp-zero.nvim',
-    requires = {
-      -- LSP Support
-      {'neovim/nvim-lspconfig'},
-      {'williamboman/mason.nvim'},
-      {'williamboman/mason-lspconfig.nvim'},
+  -- LSP Support
+  use {'neovim/nvim-lspconfig'}
+  use {'williamboman/mason.nvim'}
+  use {'williamboman/mason-lspconfig.nvim'}
 
-      -- Autocompletion
-      {'hrsh7th/nvim-cmp'},
-      {'hrsh7th/cmp-nvim-lsp'},
-      {'L3MON4D3/LuaSnip'},
-    }
-  }
+  -- Autocompletion
+  use {'hrsh7th/nvim-cmp'}
+  use {'hrsh7th/cmp-buffer'}
+  use {'hrsh7th/cmp-nvim-lsp'}
+  use {'saadparwaiz1/cmp_luasnip'}
+  use {'L3MON4D3/LuaSnip'}
 
   -- rose-pine color
   use({ 'rose-pine/neovim', as = 'rose-pine' })

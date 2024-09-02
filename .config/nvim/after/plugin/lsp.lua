@@ -1,17 +1,18 @@
-local lsp = require("lsp-zero")
-
-lsp.preset("recommended")
-
-lsp.ensure_installed({
-  'clangd',
-  'lua_ls',
-  'pyright',
-  'texlab',
-})
-
 vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
+  group = vim.api.nvim_create_augroup('user_lsp_attach', {clear = true}),
+  callback = function(event)
+    local opts = {buffer = event.buf}
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+    vim.keymap.set('n', 'K', function() vim.lsp.buf.hover() end, opts)
+    vim.keymap.set('n', '<leader>vws', function() vim.lsp.buf.workspace_symbol() end, opts)
+    vim.keymap.set('n', '<leader>vd', function() vim.diagnostic.open_float() end, opts)
+    vim.keymap.set('n', '[d', function() vim.diagnostic.goto_next() end, opts)
+    vim.keymap.set('n', ']d', function() vim.diagnostic.goto_prev() end, opts)
+    vim.keymap.set('n', '<leader>vrr', function() vim.lsp.buf.references() end, opts)
+    vim.keymap.set('n', '<leader>vrn', function() vim.lsp.buf.rename() end, opts)
+    vim.keymap.set('i', '<C-h>', function() vim.lsp.buf.signature_help() end, opts)
+
     if client.server_capabilities.definitionProvider then
       vim.keymap.set("n", "<leader>gd", function()
         vim.lsp.buf.definition()
@@ -30,8 +31,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
-local opts = { noremap=true, silent=true }
-
 local function quickfix()
     vim.lsp.buf.code_action({
         filter = function(a) return a.isPreferred end,
@@ -43,5 +42,64 @@ vim.keymap.set('n', '<leader>qf', quickfix, opts)
 
 vim.keymap.set("n", "<leader>gh", function() vim.api.nvim_command("ClangdSwitchSourceHeader") end)
 
-lsp.setup()
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+require('mason').setup({})
+require('mason-lspconfig').setup({
+  ensure_installed = {
+    'clangd',
+    'lua_ls',
+    'texlab',
+  },
+
+  handlers = {
+    function(server_name)
+      require('lspconfig')[server_name].setup({
+        capabilities = lsp_capabilities,
+      })
+    end,
+    lua_ls = function()
+      require('lspconfig').lua_ls.setup({
+        capabilities = lsp_capabilities,
+        settings = {
+          Lua = {
+            runtime = {
+              version = 'LuaJIT'
+            },
+            diagnostics = {
+              globals = {'vim'},
+            },
+            workspace = {
+              library = {
+                vim.env.VIMRUNTIME,
+              }
+            }
+          }
+        }
+      })
+    end,
+  }
+})
+
+local cmp = require('cmp')
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
+
+cmp.setup({
+  sources = cmp.config.sources({
+    {name = 'nvim_lsp'},  
+    {name = 'luasnip'},  
+  }, {
+    {name = 'buffer'},
+  }),
+  mapping = cmp.mapping.preset.insert({
+    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+    ['<C-y>'] = cmp.mapping.confirm({select = true}),
+    ['<C-Space>'] = cmp.mapping.complete(),
+  }),
+  snippet = {
+    expand = function(args)
+      require('luasnip').lsp_expand(args.body)
+    end,
+  },
+})
