@@ -1,0 +1,15 @@
+[user]
+	name = Jake Bessen
+	email = jakeb@safeai.ai
+
+[core]
+  filemode = false
+
+[merge]
+tool = nvim
+
+[mergetool]
+    keepBackup = false
+
+[mergetool "nvim"]
+    cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
