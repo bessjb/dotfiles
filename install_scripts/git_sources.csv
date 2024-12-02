@@ -1,0 +1,65 @@
+{
+  "deb_ppa": [
+    {
+      "name": "google-chrome",
+      "key_url": "https://dl.google.com/linux/linux_signing_key.pub",
+      "source_url": "https://dl.google.com/linux/chrome/deb/",
+      "args": "stable main",
+      "packages": [
+        "google-chrome-stable"
+      ]
+    },
+    {
+      "name": "zotero",
+      "key_url": "https://raw.githubusercontent.com/retorquere/zotero-deb/master/zotero-archive-keyring.gpg",
+      "source_url": "https://zotero.retorque.re/file/apt-package-archive",
+      "args": "./",
+      "packages": [
+        "zotero"
+      ]
+    },
+    {
+      "name": "dropbox",
+      "key_url": "https://linux.dropbox.com/fedora/rpm-public-key.asc",
+      "source_url": "http://linux.dropbox.com/ubuntu",
+      "args": "noble main",
+      "packages": [
+        "dropbox"
+      ]
+    },
+    {
+      "name": "docker",
+      "key_url": "https://download.docker.com/linux/ubuntu/gpg",
+      "source_url": "https://download.docker.com/linux/ubuntu",
+      "args": "noble stable",
+      "packages": [
+        "docker-ce",
+        "docker-ce-cli",
+        "containerd.io",
+        "docker-buildx-plugin",
+        "docker-compose-plugin"
+      ]
+    },
+    {
+      "name": "syncthing",
+      "key_url": "https://syncthing.net/release-key.gpg",
+      "source_url": "https://apt.syncthing.net/",
+      "args": "syncthing stable",
+      "packages": [
+        "syncthing"
+      ]
+    }
+  ],
+  "fix_me": [
+    {
+      "name": "qgis",
+      "key_url": "https://download.qgis.org/downloads/qgis-2022.gpg.key",
+      "source_url": "https://qgis.org/debian",
+      "args": "noble main",
+      "packages": [
+        "qgis",
+        "qgis-plugin-grass"
+      ]
+    }
+  ]
+}
