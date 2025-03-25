@@ -1,6 +1,4 @@
 return {
-  'tpope/vim-fugitive',
-  'ThePrimeagen/vim-be-good',
   {
     'jmbuhr/otter.nvim',
     dependencies = {
@@ -8,6 +6,4 @@ return {
     },
     opts = {},
   }
-
 }
-
