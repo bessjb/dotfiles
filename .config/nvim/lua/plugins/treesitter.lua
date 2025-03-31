@@ -11,7 +11,8 @@ return {
           'mermaid',
           'vim',
           'bash',
-          'markdown'
+          'markdown',
+          'latex'
         },
         highlight = {
           enable = true,
