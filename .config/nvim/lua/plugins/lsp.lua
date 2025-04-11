@@ -27,6 +27,7 @@ return {
         'clangd',
         'lua_ls',
         'texlab',
+        'ltex-ls',
         'pyright'
       },
       handlers = {
@@ -37,6 +38,17 @@ return {
         end,
       }
     })
+
+    require("lspconfig").ltex.setup {
+      settings = {
+        ltex = {
+          language = "en",
+          additionalRules = {
+            languageModel = "/home/jake/.config/ngrams",
+          },
+        },
+      },
+    }
 
     vim.keymap.set("n", "<leader>gh", function() vim.api.nvim_command("ClangdSwitchSourceHeader") end)
 
