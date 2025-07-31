@@ -135,6 +135,6 @@ case "$TERM" in
         ;;
 esac
 export PROMPT_COMMAND="__git_ps1 '"'${VIRTUAL_ENV:+($(basename "$VIRTUAL_ENV")) }'"$PRE' '$ '"
-export PATH="/home/jake/.local/bin:$PATH"
+export PATH="/home/$USER/.local/bin:$PATH"
 alias vim="nvim"
 

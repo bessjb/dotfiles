@@ -6,6 +6,12 @@ return {
     {
       'nvim-telescope/telescope-fzf-native.nvim',
       build = 'make'
+    },
+    {
+      'jmbuhr/telescope-zotero.nvim',
+      dependencies = {
+        'kkharji/sqlite.lua',
+      },
     }
   },
   config = function()
@@ -25,8 +31,11 @@ return {
     -- To get fzf loaded and working with telescope, you need to call
     -- load_extension, somewhere after setup function:
     require('telescope').load_extension('fzf')
+    require('telescope').load_extension('zotero')
 
     local builtin = require('telescope.builtin')
+    local zotero = require('zotero')
+    vim.keymap.set('n', '<leader>z', zotero.picker, {})
     vim.keymap.set('n', '<leader>pf', function()
       builtin.find_files({no_ignore= true});
     end)
