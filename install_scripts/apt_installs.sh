@@ -38,6 +38,8 @@ sudo apt update
 sudo apt upgrade -y
 
 sudo apt install --fix-missing -y \
+  git \
+  git-lfs \
   neovim \
   curl \
   tmux \
@@ -46,7 +48,14 @@ sudo apt install --fix-missing -y \
   npm \
   ripgrep \
   make \
-  clang
+  clang \
+  biber \
+  gparted \
+  fzf
+
+sudo npm install -g tree-sitter-cli
+
+sudo ubuntu-drivers install
 
 echo "Creating sources for: "
 echo "======================"

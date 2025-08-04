@@ -137,4 +137,5 @@ esac
 export PROMPT_COMMAND="__git_ps1 '"'${VIRTUAL_ENV:+($(basename "$VIRTUAL_ENV")) }'"$PRE' '$ '"
 export PATH="/home/$USER/.local/bin:$PATH"
 alias vim="nvim"
+alias cdf='cd "$(find -type d | fzf)"'
 
