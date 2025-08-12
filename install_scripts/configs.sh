@@ -33,5 +33,9 @@ gsettings set org.gnome.shell favorite-apps "[ \
   'bitwarden_bitwarden.desktop' \
   ]"
 
+xdg-mime default nvim.desktop text
+
+## TODO -- add default apps here
+
 dropbox start --install
 

@@ -48,7 +48,17 @@
       "packages": [
         "syncthing"
       ]
+    },
+    {
+      "name": "cuda",
+      "key_url": "https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/3bf863cc.pub",
+      "source_url": "https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/",
+      "args": "/",
+      "packages": [
+        "cuda-runtime-12-9"
+      ]
     }
+
   ],
   "fix_me": [
     {
