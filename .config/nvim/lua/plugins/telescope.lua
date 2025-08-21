@@ -1,3 +1,12 @@
+local function locate_tex_bib()
+  bib_file = "../references/bibliography.bib"
+  local ok, lines = pcall(io.lines, bib_file)
+  if not ok then 
+    bib_file = nil
+  end
+  return bib_file
+end
+
 return {
   'nvim-telescope/telescope.nvim',
   tag = '0.1.5',
@@ -15,8 +24,17 @@ return {
     }
   },
   config = function()
-    -- You dont need to set any of these options. These are the default ones. Only
-    -- the loading is important
+
+    new_ft = require('zotero').config.ft
+    new_ft.tex = {
+      insert_key_formatter = function(citekey)
+        return '\\autocite{' .. citekey .. '}'
+      end,
+      locate_bib = locate_tex_bib,
+    }
+    require('zotero').setup {
+      new_ft
+    }
     require('telescope').setup {
       extensions = {
         fzf = {

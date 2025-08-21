@@ -12,7 +12,8 @@ return {
           'vim',
           'bash',
           'markdown',
-          'latex'
+          'latex',
+          'lua'
         },
         highlight = {
           enable = true,

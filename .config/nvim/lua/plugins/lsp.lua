@@ -27,7 +27,6 @@ return {
         'clangd',
         'lua_ls',
         'texlab',
-        'ltex-ls',
         'pyright'
       },
       handlers = {
