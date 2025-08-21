@@ -53,7 +53,7 @@ return {
 
     local builtin = require('telescope.builtin')
     local zotero = require('zotero')
-    vim.keymap.set('n', '<leader>z', zotero.picker, {})
+    vim.keymap.set('n', '<leader>zo', zotero.picker, {})
     vim.keymap.set('n', '<leader>pf', function()
       builtin.find_files({no_ignore= true});
     end)
