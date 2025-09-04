@@ -13,9 +13,9 @@ setup_source () {
 	REPO="$3"
 	ARGS=${@:4}
 
-        echo "source: $SOURCE" 
-        echo "keyring: $KEYRING" 
-        echo "gpgkey: $GPGKEY_URL" 
+  echo "source: $SOURCE" 
+  echo "keyring: $KEYRING" 
+  echo "gpgkey: $GPGKEY_URL" 
 	echo "args: $ARGS"
 	
 	wget -q -O - $GPGKEY_URL | gpg --dearmor | sudo tee $KEYRING > /dev/null
@@ -41,7 +41,6 @@ sudo apt install --fix-missing -y \
   git \
   git-lfs \
   htop \
-  neovim \
   curl \
   tmux \
   jq \
@@ -50,7 +49,6 @@ sudo apt install --fix-missing -y \
   ripgrep \
   make \
   clang \
-  biber \
   gparted \
   fzf \
   cargo \
@@ -60,23 +58,7 @@ sudo apt install --fix-missing -y \
   qt6-base-dev \
   libxcb-cursor0
 
-sudo npm install -g tree-sitter-cli
-
 sudo ubuntu-drivers install
-
-## TODO.. Add tectonic Automatically move to .local
-#curl --proto '=https' --tlsv1.2 -fsSL https://drop-sh.fullyjustified.net |sh
-## Biber = 2.17 also needs to be curl installed.. check checksums
-
-## TODO
-#Zotero in a better spot 
-#Automatic install of zotero plugins
-#Where are my zotero config files?
-
-#mkdir -p ~/miniconda3
-#wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
-#bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
-#rm ~/miniconda3/miniconda.sh
 
 echo "Creating sources for: "
 echo "======================"
