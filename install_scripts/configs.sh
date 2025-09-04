@@ -5,6 +5,14 @@ pushd ~/dotfiles
 stow .
 popd
 
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+## TODO.. Do this better
+xhost +local:docker
+
+CRON_JOB="0 2 * * * rm -rf $USER/Downloads/*"
+( crontab -l 2>/dev/null | grep -Fv "$CRON_JOB" ; echo "$CRON_JOB" ) | crontab -
 
 profile=$(gsettings get org.gnome.Terminal.ProfilesList default)
 profile=${profile:1:-1}
