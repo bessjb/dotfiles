@@ -1,0 +1,85 @@
+#!/bin/sh
+
+queues=$(timeout 8 ssh -o BatchMode=yes -o ConnectTimeout=5 hpc \
+    'qstat -Qf gpu_batch_exec qcr-users' 2>/dev/null)
+queue_status=$?
+
+queue_counts=$(printf '%s\n' "$queues" | awk '
+    /^Queue:/ { queue = $2 }
+    /state_count/ {
+        queued = $0
+        sub(/^.*Queued:/, "", queued)
+        sub(/ .*/, "", queued)
+        if (queue == "gpu_batch_exec") gpu = queued
+        if (queue == "qcr-users") qcr = queued
+    }
+    END {
+        if (gpu ~ /^[0-9]+$/ && qcr ~ /^[0-9]+$/) print gpu, qcr
+    }
+')
+
+jobs=$(timeout 8 ssh -o BatchMode=yes -o ConnectTimeout=5 hpc \
+    'job_ids=$(qselect -u "$USER") || exit; [ -z "$job_ids" ] || qstat -fx $job_ids' 2>/dev/null)
+job_status=$?
+
+job_counts=$(printf '%s\n' "$jobs" | awk '
+    function count_job(queued, running, value) {
+        if (job_queue == "gpu_batch_exec" || job_queue == "qcr-users") {
+            if (array_counts != "") {
+                value = array_counts
+                sub(/^.*Queued:/, "", value)
+                sub(/ .*/, "", value)
+                if (value ~ /^[0-9]+$/) queued = value
+
+                value = array_counts
+                sub(/^.*Running:/, "", value)
+                sub(/ .*/, "", value)
+                if (value ~ /^[0-9]+$/) running = value
+
+                user_queued += queued
+                user_running += running
+            } else {
+                if (job_state == "Q") user_queued++
+                if (job_state == "R") user_running++
+            }
+        }
+        job_queue = ""
+        job_state = ""
+        array_counts = ""
+    }
+    /^Job Id:/ { count_job(); next }
+    /^[[:space:]]*job_state = / {
+        job_state = $3
+    }
+    /^[[:space:]]*queue = / {
+        job_queue = $3
+    }
+    /^[[:space:]]*array_state_count = / {
+        array_counts = $0
+    }
+    END {
+        count_job()
+        print user_queued + 0, user_running + 0
+    }
+')
+
+if [ "$queue_status" -eq 124 ] || [ "$queue_status" -eq 255 ]; then
+    queue_display='GPU #[fg=colour8]■ ?#[fg=white] QCR #[fg=colour8]■ ?#[fg=white]'
+elif [ "$queue_status" -ne 0 ] || [ -z "$queue_counts" ]; then
+    queue_display='GPU #[fg=colour1]■ ?#[fg=white] QCR #[fg=colour1]■ ?#[fg=white]'
+else
+    set -- $queue_counts
+    if [ "$1" -eq 0 ]; then gpu_colour=colour2; else gpu_colour=colour1; fi
+    if [ "$2" -eq 0 ]; then qcr_colour=colour2; else qcr_colour=colour1; fi
+    queue_display=$(printf 'GPU #[fg=%s]■ %s#[fg=white] QCR #[fg=%s]■ %s#[fg=white]' \
+        "$gpu_colour" "$1" "$qcr_colour" "$2")
+fi
+
+if [ "$job_status" -ne 0 ] || [ -z "$job_counts" ]; then
+    job_display='Jobs Q:? R:?'
+else
+    set -- $job_counts
+    job_display=$(printf 'Jobs Q:%s R:%s' "$1" "$2")
+fi
+
+printf '| %s | %s' "$queue_display" "$job_display"
